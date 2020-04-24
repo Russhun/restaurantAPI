@@ -16,7 +16,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Service("mongoUserDetailsService")
-public class MongoUserDetailsService implements UserDetailsService {
+public class MySQLUserDetailsService implements UserDetailsService {
 
     @Autowired
     UserRepository userRepository;
@@ -24,12 +24,12 @@ public class MongoUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
 
-        Users user = userRepository.findByUsername(s);
+        Users user = userRepository.findByEmail(s);
         if (user == null) throw new UsernameNotFoundException("User not found");
 
         List<SimpleGrantedAuthority> authorities =
-                Collections.singletonList(new SimpleGrantedAuthority(user.getRole()));
+                Collections.singletonList(new SimpleGrantedAuthority(user.getRole().getTitle()));
 
-        return new User(user.getUsername(), user.getPassword(), authorities);
+        return new User(user.getEmail(), user.getPassword(), authorities);
     }
 }
