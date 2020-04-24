@@ -36,7 +36,9 @@ public class TokenAuthenticationService {
             try {
                 user = Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token.replace(TOKEN_PREFIX, "")).getBody()
                         .getSubject();
-            } catch (IllegalArgumentException e){return null;}
+            } catch (IllegalArgumentException e) {
+                return null;
+            }
 
             return user != null ? new UsernamePasswordAuthenticationToken(user, null, Collections.emptyList()) : null;
         }
