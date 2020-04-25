@@ -26,7 +26,9 @@ public class CustomerOrder {
 
     @Column(name = "user_email")
     private String userEmail;
-    private String status;
+
+    @Column(name = "order_status_id")
+    private int status;
 
 
 }

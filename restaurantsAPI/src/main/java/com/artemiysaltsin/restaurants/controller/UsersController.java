@@ -1,8 +1,10 @@
 package com.artemiysaltsin.restaurants.controller;
 
 import com.artemiysaltsin.restaurants.model.Branch;
+import com.artemiysaltsin.restaurants.model.BranchMenu;
 import com.artemiysaltsin.restaurants.model.Restaurant;
 import com.artemiysaltsin.restaurants.model.Users;
+import com.artemiysaltsin.restaurants.repository.BranchMenuRepository;
 import com.artemiysaltsin.restaurants.repository.BranchRepository;
 import com.artemiysaltsin.restaurants.repository.RestaurantRepository;
 import com.artemiysaltsin.restaurants.repository.UserRepository;
@@ -25,9 +27,12 @@ public class UsersController {
     @Autowired
     BranchRepository branchRepository;
 
+    @Autowired
+    BranchMenuRepository branchMenuRepository;
+
     @RequestMapping(value = {"/"}, method = RequestMethod.GET)
-    public List<Branch> index() {
-        return branchRepository.findAllByRestaurantId(1);
+    public List<BranchMenu> index() {
+        return branchMenuRepository.findAllByBranchId(1);
     }
 
 

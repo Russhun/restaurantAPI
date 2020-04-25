@@ -1,7 +1,6 @@
 package com.artemiysaltsin.restaurants.model;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,7 +15,8 @@ import javax.persistence.*;
 public class Branch {
 
     @Id
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
     private int restaurantId;
 
@@ -25,6 +25,8 @@ public class Branch {
     private String address;
 
     private boolean enable;
+
+
 
 
 }

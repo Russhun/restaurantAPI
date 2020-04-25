@@ -15,7 +15,8 @@ import javax.persistence.*;
 public class RestaurantLegal {
 
     @Id
-    private int id;
+    @Column(name = "restaurant_id")
+    private int restaurantId;
 
     private String ogrn;
 
@@ -26,7 +27,5 @@ public class RestaurantLegal {
 
     private String address;
 
-//    @OneToOne(mappedBy = "restaurant", cascade = CascadeType.ALL)
-//    private RestaurantLegal restaurantLegal;
 
 }

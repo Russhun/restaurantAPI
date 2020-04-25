@@ -28,6 +28,9 @@ public class UserMenu {
     @Column(name = "menu_id")
     private int menuId;
 
+    @Column(name = "order_id")
+    private int orderId;
+
     @Column(name = "item_count")
     private int itemCount;
 
