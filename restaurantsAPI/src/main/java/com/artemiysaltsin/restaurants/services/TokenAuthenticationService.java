@@ -4,10 +4,10 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Collections;
 import java.util.Date;
 
 public class TokenAuthenticationService {
@@ -27,20 +27,22 @@ public class TokenAuthenticationService {
         res.addHeader(HEADER_STRING, TOKEN_PREFIX + " " + JWT);
     }
 
-    public static Authentication getAuthentication(HttpServletRequest request) {
+    public static Authentication getAuthentication(HttpServletRequest request, MySQLUserDetailsService userDetailsService) {
         String token = request.getHeader(HEADER_STRING);
         String user;
         if (token != null) {
             // parse the token.
-
             try {
                 user = Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token.replace(TOKEN_PREFIX, "")).getBody()
                         .getSubject();
             } catch (IllegalArgumentException e) {
                 return null;
             }
-
-            return user != null ? new UsernamePasswordAuthenticationToken(user, null, Collections.emptyList()) : null;
+            if (user == null) return null;
+            else {
+                UserDetails myUser = userDetailsService.loadUserByUsername(user);
+                return new UsernamePasswordAuthenticationToken(user, null, myUser.getAuthorities());
+            }
         }
         return null;
     }

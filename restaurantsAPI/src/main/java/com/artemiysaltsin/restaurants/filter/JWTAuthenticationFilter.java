@@ -1,5 +1,6 @@
 package com.artemiysaltsin.restaurants.filter;
 
+import com.artemiysaltsin.restaurants.services.MySQLUserDetailsService;
 import com.artemiysaltsin.restaurants.services.TokenAuthenticationService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -14,13 +15,18 @@ import java.io.IOException;
 
 public class JWTAuthenticationFilter extends GenericFilterBean {
 
+    MySQLUserDetailsService userDetailsService;
+
+    public JWTAuthenticationFilter(MySQLUserDetailsService userDetailsService) {
+        this.userDetailsService = userDetailsService;
+    }
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
             throws IOException, ServletException {
 
         Authentication authentication = TokenAuthenticationService
-                .getAuthentication((HttpServletRequest) servletRequest);
+                .getAuthentication((HttpServletRequest) servletRequest, userDetailsService);
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 

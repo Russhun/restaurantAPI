@@ -24,7 +24,6 @@ public class MySQLUserDetailsService implements UserDetailsService {
 
         Users user = userRepository.findByEmail(s);
         if (user == null) throw new UsernameNotFoundException("User not found");
-
         List<SimpleGrantedAuthority> authorities =
                 Collections.singletonList(new SimpleGrantedAuthority(user.getRole().getTitle()));
 

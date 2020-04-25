@@ -44,17 +44,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/").permitAll() //
                 .antMatchers(HttpMethod.POST, "/login").permitAll() //
                 // Need authentication.
-                .antMatchers("/restaurant").hasAnyRole()
-                .antMatchers("/user").hasAnyRole()
-                .antMatchers("/orders").hasAnyRole("WAITER", "ADMIN")
-                .antMatchers("/kitchen").hasAnyRole("COOK", "ADMIN")
-                .antMatchers(HttpMethod.GET,"/branch").hasAnyRole()
-                .antMatchers(HttpMethod.DELETE, "/branch").hasAnyRole("OWNER", "ADMIN")
-                .antMatchers(HttpMethod.POST,"/branch").hasAnyRole("OWNER", "ADMIN")
-                .antMatchers("/staff").hasAnyRole("OWNER", "ADMIN")
-                .antMatchers(HttpMethod.GET,"/menu").hasAnyRole()
-                .antMatchers(HttpMethod.DELETE, "/menu").hasAnyRole("OWNER", "ADMIN")
-                .antMatchers(HttpMethod.POST, "/menu").hasAnyRole("OWNER", "ADMIN")
+                .antMatchers("/restaurant").hasAnyAuthority()
+                .antMatchers("/user").hasAnyAuthority("USER", "ADMIN", "WAITER", "OWNER")
+                .antMatchers("/orders").hasAnyAuthority("WAITER", "ADMIN")
+                .antMatchers("/kitchen").hasAnyAuthority("COOK", "ADMIN")
+                .antMatchers(HttpMethod.GET,"/branch").hasAnyAuthority()
+                .antMatchers(HttpMethod.DELETE, "/branch").hasAnyAuthority("OWNER", "ADMIN")
+                .antMatchers(HttpMethod.POST,"/branch").hasAnyAuthority("OWNER", "ADMIN")
+                .antMatchers("/staff").hasAnyAuthority("OWNER", "ADMIN")
+                .antMatchers(HttpMethod.GET,"/menu").hasAnyAuthority()
+                .antMatchers(HttpMethod.DELETE, "/menu").hasAnyAuthority("OWNER", "ADMIN")
+                .antMatchers(HttpMethod.POST, "/menu").hasAnyAuthority("OWNER", "ADMIN")
                 .anyRequest().authenticated()
                 //
                 .and()
@@ -66,7 +66,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 //
                 // Add Filter 2 - JWTAuthenticationFilter
                 //
-                .addFilterBefore(new JWTAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(new JWTAuthenticationFilter(userDetailsService), UsernamePasswordAuthenticationFilter.class);
     }
 
 

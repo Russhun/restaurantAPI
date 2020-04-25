@@ -1,38 +1,29 @@
 package com.artemiysaltsin.restaurants.controller;
-
-import com.artemiysaltsin.restaurants.model.Branch;
-import com.artemiysaltsin.restaurants.model.BranchMenu;
-import com.artemiysaltsin.restaurants.model.Restaurant;
-import com.artemiysaltsin.restaurants.model.Users;
-import com.artemiysaltsin.restaurants.repository.BranchMenuRepository;
-import com.artemiysaltsin.restaurants.repository.BranchRepository;
-import com.artemiysaltsin.restaurants.repository.RestaurantRepository;
 import com.artemiysaltsin.restaurants.repository.UserRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-import java.util.Set;
-
+import javax.servlet.http.HttpServletRequest;
 
 @RestController
 public class UsersController {
 
 
     @Autowired
-    RestaurantRepository restaurantRepository;
+    UserRepository userRepository;
 
-    @Autowired
-    BranchRepository branchRepository;
-
-    @Autowired
-    BranchMenuRepository branchMenuRepository;
-
-    @RequestMapping(value = {"/"}, method = RequestMethod.GET)
-    public List<BranchMenu> index() {
-        return branchMenuRepository.findAllByBranchId(1);
+    @RequestMapping(value = {"/user"}, method = RequestMethod.GET)
+    public ResponseEntity index(HttpServletRequest request,
+                                Authentication authentication) {
+        if (authentication.isAuthenticated()) return ResponseEntity.ok(userRepository.findByEmail(authentication.getName()));
+        else return ResponseEntity.ok(HttpStatus.FORBIDDEN);
     }
 
 
