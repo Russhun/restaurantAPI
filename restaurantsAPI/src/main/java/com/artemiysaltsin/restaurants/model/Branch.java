@@ -1,32 +1,30 @@
 package com.artemiysaltsin.restaurants.model;
 
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
-import java.util.Set;
-
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "restaurant")
-public class Restaurant {
+@Table(name = "branch")
+public class Branch {
 
     @Id
     private int id;
 
-    private String name;
-
-    @Column(name = "tiny_description")
-    private String tinyDescription;
-
-    private String description;
+    private int restaurantId;
 
     private String phone;
+
+    private String address;
+
+    private boolean enable;
+
 
 }
