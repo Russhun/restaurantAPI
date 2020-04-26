@@ -15,14 +15,14 @@ public class BranchMenu {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    private int branchId;
+    private Integer id;
+    private Integer branchId;
     private String name;
     private Float weight;
     private String measure;
     private String composition;
-    private int price;
-    private boolean enable;
+    private Integer price;
+    private Boolean enable;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "promo_id", referencedColumnName = "id")

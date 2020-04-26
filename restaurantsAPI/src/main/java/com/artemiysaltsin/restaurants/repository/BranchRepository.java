@@ -9,6 +9,7 @@ import java.util.List;
 public interface BranchRepository extends JpaRepository<Branch, Integer> {
 
     List<Branch> findAllByRestaurantId(int restaurantId);
+    List<Branch> findAllByRestaurantIdAndEnable(int restaurantId, boolean enable);
     Branch findBranchById(Integer id);
 
 }

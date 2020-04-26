@@ -44,15 +44,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/").permitAll() //
                 .antMatchers(HttpMethod.POST, "/login", "/reg").permitAll() //
                 // Need authentication.
-                .antMatchers("/restaurant").hasAnyAuthority()
+                .antMatchers("/restaurant").hasAnyAuthority("USER", "ADMIN", "WAITER", "OWNER")
                 .antMatchers("/user").hasAnyAuthority("USER", "ADMIN", "WAITER", "OWNER")
                 .antMatchers("/orders").hasAnyAuthority("WAITER", "ADMIN")
                 .antMatchers("/kitchen").hasAnyAuthority("COOK", "ADMIN")
-                .antMatchers(HttpMethod.GET,"/branch").hasAnyAuthority()
+                .antMatchers(HttpMethod.GET,"/branch").hasAnyAuthority("USER", "ADMIN", "WAITER", "OWNER")
                 .antMatchers(HttpMethod.DELETE, "/branch").hasAnyAuthority("OWNER", "ADMIN")
                 .antMatchers(HttpMethod.POST,"/branch").hasAnyAuthority("OWNER", "ADMIN")
                 .antMatchers("/staff").hasAnyAuthority("OWNER", "ADMIN")
-                .antMatchers(HttpMethod.GET,"/menu").hasAnyAuthority()
+                .antMatchers(HttpMethod.GET,"/menu").hasAnyAuthority("USER", "ADMIN", "WAITER", "OWNER")
                 .antMatchers(HttpMethod.DELETE, "/menu").hasAnyAuthority("OWNER", "ADMIN")
                 .antMatchers(HttpMethod.POST, "/menu").hasAnyAuthority("OWNER", "ADMIN")
                 .anyRequest().authenticated()
