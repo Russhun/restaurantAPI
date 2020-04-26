@@ -2,6 +2,7 @@ package com.artemiysaltsin.restaurants.controller;
 import com.artemiysaltsin.restaurants.forms.StaffForm;
 import com.artemiysaltsin.restaurants.forms.UserForm;
 import com.artemiysaltsin.restaurants.model.AppRole;
+import com.artemiysaltsin.restaurants.model.CustomerOrder;
 import com.artemiysaltsin.restaurants.model.Users;
 import com.artemiysaltsin.restaurants.repository.AppRoleRepository;
 import com.artemiysaltsin.restaurants.repository.UserRepository;
@@ -30,6 +31,7 @@ public class UsersController {
 
 
 
+
     @RequestMapping(value = "/user", method = RequestMethod.GET)
     public ResponseEntity getUser(Authentication authentication) {
         return ResponseEntity.ok(userRepository.findByEmail(authentication.getName()));
@@ -46,6 +48,7 @@ public class UsersController {
         userRepository.save(newUser);
         return ResponseEntity.ok(HttpStatus.CREATED);
     }
+
 
 
 

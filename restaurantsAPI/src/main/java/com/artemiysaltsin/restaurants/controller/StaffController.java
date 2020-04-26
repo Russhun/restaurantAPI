@@ -2,6 +2,7 @@ package com.artemiysaltsin.restaurants.controller;
 
 import com.artemiysaltsin.restaurants.forms.BranchIdForm;
 import com.artemiysaltsin.restaurants.forms.EmailForm;
+import com.artemiysaltsin.restaurants.forms.PlaceForm;
 import com.artemiysaltsin.restaurants.forms.StaffForm;
 import com.artemiysaltsin.restaurants.model.BranchSeat;
 import com.artemiysaltsin.restaurants.model.BranchStaff;
@@ -67,7 +68,8 @@ public class StaffController {
                 staffForm.getSureName(), staffForm.getAge(), password,true,true,
                 appRoleRepository.findById(2), null));
 
-        branchStaffRepository.save(new BranchStaff(1, staffForm.getBranchId(), staffForm.getEmail()));
+        branchStaffRepository.save(new BranchStaff(1, staffForm.getBranchId(), staffForm.getEmail(),
+                staffForm.getSalary(), staffForm.getHireDate()));
 
         return ResponseEntity.ok(HttpStatus.CREATED);
     }
@@ -92,6 +94,7 @@ public class StaffController {
 
         return ResponseEntity.ok(HttpStatus.OK);
     }
+
 
 
 

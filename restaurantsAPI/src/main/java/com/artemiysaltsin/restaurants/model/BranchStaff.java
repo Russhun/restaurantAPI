@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.sql.Date;
 
 @Data
 @AllArgsConstructor
@@ -22,5 +23,9 @@ public class BranchStaff {
 
     @Column(name = "user_email")
     private String userEmail;
+
+    private int salary;
+
+    private Date hireDate;
 
 }

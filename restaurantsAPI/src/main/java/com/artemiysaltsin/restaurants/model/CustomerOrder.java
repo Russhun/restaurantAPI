@@ -4,10 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.sql.Date;
 
 @Data
@@ -18,8 +15,9 @@ import java.sql.Date;
 public class CustomerOrder {
 
     @Id
-    private int id;
-    private int price;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    private Integer price;
 
     @Column(name = "order_date")
     private Date dateTime;
@@ -27,8 +25,11 @@ public class CustomerOrder {
     @Column(name = "user_email")
     private String userEmail;
 
+    @Column(name = "branch_seat_id")
+    private int branchSeatId;
+
     @Column(name = "order_status_id")
-    private int status;
+    private Integer status;
 
 
 }

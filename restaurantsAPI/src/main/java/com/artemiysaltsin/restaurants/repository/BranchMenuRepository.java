@@ -8,5 +8,6 @@ import java.util.List;
 public interface BranchMenuRepository extends JpaRepository<BranchMenu, Integer> {
 
     List<BranchMenu> findAllByBranchId(int branchId);
+    BranchMenu findById(int id);
 
 }

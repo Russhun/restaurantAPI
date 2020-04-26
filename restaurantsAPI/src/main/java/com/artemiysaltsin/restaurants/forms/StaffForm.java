@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Date;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -16,6 +18,8 @@ public class StaffForm {
     private int age;
     private String password;
     private int branchId;
+    private int salary;
+    private Date hireDate;
 
 
 }

@@ -4,26 +4,18 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "user_menu")
+@Table(name = "order_product")
 public class UserMenu {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
-    @Column(name = "branch_seat_id")
-    private int branchSeatId;
-
-    @Column(name = "user_email")
-    private String userEmail;
 
     @Column(name = "menu_id")
     private int menuId;
@@ -33,6 +25,9 @@ public class UserMenu {
 
     @Column(name = "item_count")
     private int itemCount;
+
+    @Column(name = "product_status_id")
+    private int productStatusId;
 
 
 }

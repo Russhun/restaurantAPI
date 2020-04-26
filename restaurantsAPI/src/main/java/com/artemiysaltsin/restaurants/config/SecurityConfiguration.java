@@ -44,13 +44,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/").permitAll() //
                 .antMatchers(HttpMethod.POST, "/login", "/reg").permitAll() //
                 // Need authentication.
-                .antMatchers("/restaurant").hasAnyAuthority("USER", "ADMIN", "WAITER", "OWNER")
-                .antMatchers("/user").hasAnyAuthority("USER", "ADMIN", "WAITER", "OWNER")
+                .antMatchers("/restaurant", "/user", "/order").hasAnyAuthority("USER", "ADMIN", "WAITER", "OWNER")
                 .antMatchers("/orders").hasAnyAuthority("WAITER", "ADMIN")
                 .antMatchers("/kitchen").hasAnyAuthority("COOK", "ADMIN")
                 .antMatchers(HttpMethod.GET,"/branch").hasAnyAuthority("USER", "ADMIN", "WAITER", "OWNER")
                 .antMatchers(HttpMethod.DELETE, "/branch").hasAnyAuthority("OWNER", "ADMIN")
                 .antMatchers(HttpMethod.POST,"/branch").hasAnyAuthority("OWNER", "ADMIN")
+                .antMatchers("/seat").hasAnyAuthority("USER", "ADMIN", "WAITER", "OWNER")
                 .antMatchers("/staff").hasAnyAuthority("OWNER", "ADMIN")
                 .antMatchers(HttpMethod.GET,"/menu").hasAnyAuthority("USER", "ADMIN", "WAITER", "OWNER")
                 .antMatchers(HttpMethod.DELETE, "/menu").hasAnyAuthority("OWNER", "ADMIN")

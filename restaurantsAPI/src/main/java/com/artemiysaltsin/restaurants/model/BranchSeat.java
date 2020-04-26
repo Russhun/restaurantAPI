@@ -24,7 +24,7 @@ public class BranchSeat {
     private int branchId;
 
     @Column(name = "num")
-    private int places;
+    private int seatNumber;
 
     @Column(name = "table_num")
     private int tableNumber;
