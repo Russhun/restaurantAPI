@@ -7,10 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserForm {
+public class BranchIdForm {
 
-    String email;
-    String password;
-
+    private int branchId;
 
 }

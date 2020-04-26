@@ -42,7 +42,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.csrf().disable().authorizeRequests()
                 // No need authentication.
                 .antMatchers("/").permitAll() //
-                .antMatchers(HttpMethod.POST, "/login").permitAll() //
+                .antMatchers(HttpMethod.POST, "/login", "/reg").permitAll() //
                 // Need authentication.
                 .antMatchers("/restaurant").hasAnyAuthority()
                 .antMatchers("/user").hasAnyAuthority("USER", "ADMIN", "WAITER", "OWNER")

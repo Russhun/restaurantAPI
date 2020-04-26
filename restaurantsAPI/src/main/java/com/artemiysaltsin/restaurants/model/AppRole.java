@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -19,8 +20,11 @@ public class AppRole {
     private int id;
     private String title;
 
-    @OneToOne(mappedBy = "role")
+    @OneToMany(mappedBy = "role")
     @JsonIgnore
-    private Users user;
+    private Set<Users> user;
 
+    public AppRole(int id, String title) {
+        this.title = title;
+    }
 }

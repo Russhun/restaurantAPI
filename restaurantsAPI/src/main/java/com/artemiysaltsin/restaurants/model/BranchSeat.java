@@ -34,7 +34,7 @@ public class BranchSeat {
     @Column(name = "user_email")
     private String userEmail;
 
-    private int staffId;
+    private Integer staffId;
 
 
 
