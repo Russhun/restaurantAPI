@@ -17,7 +17,7 @@ import java.io.IOException;
 
 public class JWTAuthenticationFilter extends GenericFilterBean {
 
-    MySQLUserDetailsService userDetailsService;
+    private MySQLUserDetailsService userDetailsService;
 
     public JWTAuthenticationFilter(MySQLUserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;

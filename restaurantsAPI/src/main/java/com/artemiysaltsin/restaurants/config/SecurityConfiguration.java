@@ -33,8 +33,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/").permitAll() //
                 .antMatchers(HttpMethod.POST, "/login", "/reg").permitAll() //
                 // Need authentication.
-                .antMatchers("/restaurant", "/user", "/order", "/cart").hasAnyAuthority("USER", "ADMIN", "WAITER", "OWNER")
-                .antMatchers("/orders").hasAnyAuthority("WAITER", "ADMIN")
+                .antMatchers("/restaurant", "/user", "/cart").hasAnyAuthority("USER", "ADMIN", "WAITER", "OWNER")
+                .antMatchers(HttpMethod.POST, "/orders").hasAnyAuthority("USER", "OWNER", "WAITER", "ADMIN")
+                .antMatchers(HttpMethod.GET, "/orders").hasAnyAuthority("WAITER", "ADMIN", "OWNER")
                 .antMatchers("/kitchen").hasAnyAuthority("COOK", "ADMIN")
                 .antMatchers(HttpMethod.GET,"/branch").hasAnyAuthority("USER", "ADMIN", "WAITER", "OWNER")
                 .antMatchers(HttpMethod.DELETE, "/branch").hasAnyAuthority("OWNER", "ADMIN")

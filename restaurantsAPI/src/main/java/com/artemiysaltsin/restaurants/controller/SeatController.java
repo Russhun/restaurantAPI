@@ -4,6 +4,7 @@ import com.artemiysaltsin.restaurants.forms.BranchIdForm;
 import com.artemiysaltsin.restaurants.forms.PlaceForm;
 import com.artemiysaltsin.restaurants.model.BranchSeat;
 import com.artemiysaltsin.restaurants.repository.BranchSeatRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

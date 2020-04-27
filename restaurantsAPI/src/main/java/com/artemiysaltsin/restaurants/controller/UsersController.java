@@ -1,9 +1,11 @@
 package com.artemiysaltsin.restaurants.controller;
 
 import com.artemiysaltsin.restaurants.forms.UserForm;
+import com.artemiysaltsin.restaurants.model.BranchSeat;
 import com.artemiysaltsin.restaurants.model.CustomerOrder;
 import com.artemiysaltsin.restaurants.model.Users;
 import com.artemiysaltsin.restaurants.repository.AppRoleRepository;
+import com.artemiysaltsin.restaurants.repository.BranchSeatRepository;
 import com.artemiysaltsin.restaurants.repository.OrderRepository;
 import com.artemiysaltsin.restaurants.repository.UserRepository;
 
@@ -31,6 +33,9 @@ public class UsersController {
     @Autowired
     OrderRepository orderRepository;
 
+    @Autowired
+    BranchSeatRepository branchSeatRepository;
+
 
     @RequestMapping(value = "/user", method = RequestMethod.GET)
     public ResponseEntity getUser(Authentication authentication) {
@@ -56,14 +61,11 @@ public class UsersController {
         if (customerOrder == null) return ResponseEntity.ok(HttpStatus.NOT_FOUND);
         customerOrder.setStatus(2);
         orderRepository.save(customerOrder);
+        BranchSeat branchSeat = branchSeatRepository.findByUserEmail(authentication.getName());
+        branchSeat.setUserEmail(null);
+        branchSeatRepository.save(branchSeat);
+
 
         return ResponseEntity.ok(HttpStatus.OK);
     }
-
-
-
-
-
-
-
 }
