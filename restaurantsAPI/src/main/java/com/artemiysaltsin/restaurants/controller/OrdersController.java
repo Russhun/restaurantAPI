@@ -2,7 +2,6 @@ package com.artemiysaltsin.restaurants.controller;
 
 
 import com.artemiysaltsin.restaurants.forms.CartItemForm;
-import com.artemiysaltsin.restaurants.forms.OrderStaffForm;
 
 import com.artemiysaltsin.restaurants.model.BranchMenu;
 import com.artemiysaltsin.restaurants.model.BranchSeat;
@@ -41,15 +40,15 @@ public class OrdersController {
     @Autowired
     BranchMenuRepository branchMenuRepository;
 
-    @RequestMapping(value = "/order", method = RequestMethod.GET)
-    public ResponseEntity getOrders(Authentication authentication) {
+    @RequestMapping(value = "/orders", method = RequestMethod.GET)
+    public ResponseEntity getOrders() {
         List<CustomerOrder> orders = orderRepository.findAllByStatus(1);
 
         return ResponseEntity.ok(orders);
 
     }
 
-    @RequestMapping(value = "/order", method = RequestMethod.POST)
+    @RequestMapping(value = "/orders", method = RequestMethod.POST)
     public ResponseEntity createOrder(Authentication authentication) {
         CustomerOrder order = orderRepository.findByUserEmailAndStatus(authentication.getName(), 1);
         if (order == null) {
@@ -62,8 +61,8 @@ public class OrdersController {
         return ResponseEntity.ok(HttpStatus.IM_USED);
     }
 
-    @RequestMapping(value = "/cart", method = RequestMethod.POST)
-    public ResponseEntity postCartItem(Authentication authentication,
+    @RequestMapping(value = "/cart", method = RequestMethod.PUT)
+    public ResponseEntity putCartItem(Authentication authentication,
                                        @RequestBody CartItemForm cartItem) {
 
         CustomerOrder customerOrder = orderRepository.findByUserEmailAndStatus(authentication.getName(), 1);
@@ -82,6 +81,22 @@ public class OrdersController {
         userMenuRepository.save(userMenu);
         return ResponseEntity.ok(HttpStatus.OK);
 
+    }
+
+    @RequestMapping(value = "/cart", method = RequestMethod.POST)
+    public ResponseEntity postCartItem(Authentication authentication) {
+
+        CustomerOrder customerOrder = orderRepository.findByUserEmailAndStatus(authentication.getName(), 1);
+        if (customerOrder == null) return ResponseEntity.ok(HttpStatus.NOT_FOUND);
+
+        List<UserMenu> userMenus = userMenuRepository.findAllByOrderId(customerOrder.getId());
+        if (userMenus == null) return ResponseEntity.ok(HttpStatus.NO_CONTENT);
+
+        userMenus.forEach(userMenu -> userMenu.setProductStatusId(2));
+
+        userMenuRepository.saveAll(userMenus);
+
+        return ResponseEntity.ok(HttpStatus.OK);
     }
 
 

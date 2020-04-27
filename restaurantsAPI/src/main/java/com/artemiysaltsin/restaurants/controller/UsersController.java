@@ -1,10 +1,10 @@
 package com.artemiysaltsin.restaurants.controller;
-import com.artemiysaltsin.restaurants.forms.StaffForm;
+
 import com.artemiysaltsin.restaurants.forms.UserForm;
-import com.artemiysaltsin.restaurants.model.AppRole;
 import com.artemiysaltsin.restaurants.model.CustomerOrder;
 import com.artemiysaltsin.restaurants.model.Users;
 import com.artemiysaltsin.restaurants.repository.AppRoleRepository;
+import com.artemiysaltsin.restaurants.repository.OrderRepository;
 import com.artemiysaltsin.restaurants.repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
 
 @RestController
 public class UsersController {
@@ -29,7 +28,8 @@ public class UsersController {
     @Autowired
     AppRoleRepository appRoleRepository;
 
-
+    @Autowired
+    OrderRepository orderRepository;
 
 
     @RequestMapping(value = "/user", method = RequestMethod.GET)
@@ -47,6 +47,17 @@ public class UsersController {
                 appRoleRepository.findById(1));
         userRepository.save(newUser);
         return ResponseEntity.ok(HttpStatus.CREATED);
+    }
+
+    @RequestMapping(value = "/pay", method = RequestMethod.POST)
+    public ResponseEntity postPay(Authentication authentication) {
+
+        CustomerOrder customerOrder = orderRepository.findByUserEmailAndStatus(authentication.getName(), 1);
+        if (customerOrder == null) return ResponseEntity.ok(HttpStatus.NOT_FOUND);
+        customerOrder.setStatus(2);
+        orderRepository.save(customerOrder);
+
+        return ResponseEntity.ok(HttpStatus.OK);
     }
 
 

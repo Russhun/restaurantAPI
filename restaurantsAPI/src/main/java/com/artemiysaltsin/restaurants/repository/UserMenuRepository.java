@@ -7,7 +7,9 @@ import java.util.List;
 
 public interface UserMenuRepository extends JpaRepository<UserMenu, Integer> {
 
-
+    List<UserMenu> findAllByOrderId(int orderId);
+    List<UserMenu> findAllByProductStatusId(int productStatusId);
+    UserMenu findById(int id);
 
 
 }

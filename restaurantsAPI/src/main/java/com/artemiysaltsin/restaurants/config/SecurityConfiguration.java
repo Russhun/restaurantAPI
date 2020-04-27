@@ -27,24 +27,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        /*
-         * .csrf().disable() - Disables CSRF protection, as it is unnecessary for an API
-         *
-         * .authorizeRequests().anyRequest().authenticated() - Explains that all requests to any endpoint
-         *                                                     must be authorizes, or else they should be rejected
-         *
-         * .and().httpBasic() - Tells Spring to look for the HTTP Basic authentication method (discussed above)
-         *
-         * .and().sessionManagement().disable() - Tells Spring not to hold session information for users,
-         *                                        as this is unnecessary in an API
-         */
 
         http.csrf().disable().authorizeRequests()
                 // No need authentication.
                 .antMatchers("/").permitAll() //
                 .antMatchers(HttpMethod.POST, "/login", "/reg").permitAll() //
                 // Need authentication.
-                .antMatchers("/restaurant", "/user", "/order").hasAnyAuthority("USER", "ADMIN", "WAITER", "OWNER")
+                .antMatchers("/restaurant", "/user", "/order", "/cart").hasAnyAuthority("USER", "ADMIN", "WAITER", "OWNER")
                 .antMatchers("/orders").hasAnyAuthority("WAITER", "ADMIN")
                 .antMatchers("/kitchen").hasAnyAuthority("COOK", "ADMIN")
                 .antMatchers(HttpMethod.GET,"/branch").hasAnyAuthority("USER", "ADMIN", "WAITER", "OWNER")

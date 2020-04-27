@@ -2,7 +2,6 @@ package com.artemiysaltsin.restaurants.controller;
 
 import com.artemiysaltsin.restaurants.forms.BranchIdForm;
 import com.artemiysaltsin.restaurants.forms.PlaceForm;
-import com.artemiysaltsin.restaurants.forms.StaffIdForm;
 import com.artemiysaltsin.restaurants.model.BranchSeat;
 import com.artemiysaltsin.restaurants.repository.BranchSeatRepository;
 import org.springframework.beans.factory.annotation.Autowired;

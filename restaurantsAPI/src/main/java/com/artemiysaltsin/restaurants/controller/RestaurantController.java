@@ -1,6 +1,5 @@
 package com.artemiysaltsin.restaurants.controller;
 
-import com.artemiysaltsin.restaurants.model.Restaurant;
 import com.artemiysaltsin.restaurants.repository.RestaurantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
