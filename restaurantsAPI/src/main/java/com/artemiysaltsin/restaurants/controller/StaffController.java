@@ -23,6 +23,11 @@ import java.util.Map;
 
 @RestController
 public class StaffController {
+    /**
+     *
+     * Обработка запросов официантов
+     *
+     */
 
 
     @Autowired
@@ -43,6 +48,9 @@ public class StaffController {
 
     @RequestMapping(value = "/staff", method = RequestMethod.GET)
     public ResponseEntity getStaff(@RequestBody BranchIdForm branchIdForm) {
+        //
+        // Возвращает все занятые столы конкретного официанта
+        //
         Map<Integer, Users> usersMap = new HashMap<>();
         List<BranchStaff> branchStaffList = branchStaffRepository.findAllByBranchId(branchIdForm.getBranchId());
         if (branchStaffList != null)
@@ -57,7 +65,10 @@ public class StaffController {
 
     @RequestMapping(value = "/staff", method = RequestMethod.POST)
     public ResponseEntity postStaff(@RequestBody StaffForm staffForm) {
-
+        //
+        // Создаёт нового сотрудника
+        // Если такой уже существует, возвращает CONFLICT
+        //
         Users user = userRepository.findByEmail(staffForm.getEmail());
         if (user != null) return ResponseEntity.ok(HttpStatus.CONFLICT);
         String password = new BCryptPasswordEncoder().encode(staffForm.getPassword());
@@ -74,7 +85,10 @@ public class StaffController {
 
     @RequestMapping(value = "/staff", method = RequestMethod.DELETE)
     public ResponseEntity deleteStaff(@RequestBody EmailForm staffEmail) {
-
+        //
+        // Удаляет сотрудника
+        // Если сотрудника с переданным email нет, то возвращает NOT_FOUND
+        //
         BranchStaff staff = branchStaffRepository.findByUserEmail(staffEmail.getEmail());
         if (staff == null) return ResponseEntity.ok(HttpStatus.NOT_FOUND);
         List<BranchSeat> branchSeats = branchSeatRepository.findAllByStaffId(staff.getId());

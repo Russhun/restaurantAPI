@@ -15,13 +15,20 @@ import java.util.List;
 
 @Service("mySQLUserDetailService")
 public class MySQLUserDetailsService implements UserDetailsService {
+    /**
+     *
+     * Класс для получения информации о пользователе
+     *
+     */
 
     @Autowired
     UserRepository userRepository;
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-
+        //
+        // Возвращает пользователя со списком его прав (ролей)
+        //
         Users user = userRepository.findByEmail(s);
         if (user == null) throw new UsernameNotFoundException("User not found");
         List<SimpleGrantedAuthority> authorities =

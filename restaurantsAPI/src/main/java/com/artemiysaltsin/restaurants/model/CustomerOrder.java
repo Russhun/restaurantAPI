@@ -13,6 +13,11 @@ import java.sql.Date;
 @Entity
 @Table(name = "orders")
 public class CustomerOrder {
+    /**
+     *
+     * Заказ пользователя
+     *
+     */
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

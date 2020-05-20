@@ -14,6 +14,11 @@ import java.util.Set;
 @Entity
 @Table(name = "role")
 public class AppRole {
+    /**
+     *
+     * Класс роли пользователя
+     *
+     */
 
     @Id
     @GeneratedValue

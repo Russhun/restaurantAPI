@@ -13,6 +13,11 @@ import javax.persistence.*;
 @Entity
 @Table(name = "restaurant_legal")
 public class RestaurantLegal {
+    /**
+     *
+     * Класс юридической информации ресторана
+     *
+     */
 
     @Id
     @Column(name = "restaurant_id")

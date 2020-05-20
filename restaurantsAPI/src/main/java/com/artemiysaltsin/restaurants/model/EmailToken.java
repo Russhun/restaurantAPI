@@ -17,6 +17,11 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "email_token")
 public class EmailToken {
+    /**
+     *
+     * В данный момент не используется
+     *
+     */
 
     @Email(message = "Email should be valid",
             regexp = "^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$")

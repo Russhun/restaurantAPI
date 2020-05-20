@@ -22,6 +22,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class UsersController {
+    /**
+     *
+     * Обработка запросов пользователей
+     *
+     */
 
 
     @Autowired
@@ -39,12 +44,18 @@ public class UsersController {
 
     @RequestMapping(value = "/user", method = RequestMethod.GET)
     public ResponseEntity getUser(Authentication authentication) {
+        //
+        // Возвращает информацию о текущем пользователе
+        //
         return ResponseEntity.ok(userRepository.findByEmail(authentication.getName()));
     }
 
     @RequestMapping(value = "/reg", method = RequestMethod.POST)
     public ResponseEntity postUser(@RequestBody UserForm userForm) {
-
+        //
+        // Регистрация пользователя
+        // Если email уже занят, возвращает CONFLICT
+        //
         Users user = userRepository.findByEmail(userForm.getEmail());
         if (user != null) return ResponseEntity.ok(HttpStatus.CONFLICT);
         String password = new BCryptPasswordEncoder().encode(userForm.getPassword());
@@ -56,7 +67,11 @@ public class UsersController {
 
     @RequestMapping(value = "/pay", method = RequestMethod.POST)
     public ResponseEntity postPay(Authentication authentication) {
-
+        //
+        // "Оплата" заказа пользователя
+        // Переводит заказ в состояние 2 (оплачено)
+        // Открепляет пользователя от места
+        //
         CustomerOrder customerOrder = orderRepository.findByUserEmailAndStatus(authentication.getName(), 1);
         if (customerOrder == null) return ResponseEntity.ok(HttpStatus.NOT_FOUND);
         customerOrder.setStatus(2);

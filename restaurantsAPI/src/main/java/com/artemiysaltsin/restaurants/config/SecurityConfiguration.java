@@ -19,6 +19,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableConfigurationProperties
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+    /**
+     * Конфигурация безопасности
+     */
 
 
     @Autowired
@@ -28,11 +31,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
+        // Отключаем csrf
         http.csrf().disable().authorizeRequests()
-                // No need authentication.
-                .antMatchers("/").permitAll() //
-                .antMatchers(HttpMethod.POST, "/login", "/reg").permitAll() //
-                // Need authentication.
+                //
+                // Настраиваем пути для которых не требуется аутентификация
+                //
+                .antMatchers("/").permitAll()
+                .antMatchers(HttpMethod.POST, "/login", "/reg").permitAll()
+                //
+                // Пути, для которых требуется аутентификация
+                //
                 .antMatchers("/restaurant", "/user", "/cart").hasAnyAuthority("USER", "ADMIN", "WAITER", "OWNER")
                 .antMatchers(HttpMethod.POST, "/orders").hasAnyAuthority("USER", "OWNER", "WAITER", "ADMIN")
                 .antMatchers(HttpMethod.GET, "/orders").hasAnyAuthority("WAITER", "ADMIN", "OWNER")
@@ -49,12 +57,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 //
                 .and()
                 //
-                // Add Filter 1 - JWTLoginFilter
+                // Добавляем первый фильтер - JWTLoginFilter
                 //
                 .addFilterBefore(new JWTLoginFilter("/login", authenticationManager()),
                         UsernamePasswordAuthenticationFilter.class)
                 //
-                // Add Filter 2 - JWTAuthenticationFilter
+                // Добавляем второй фильтер - JWTAuthenticationFilter
                 //
                 .addFilterBefore(new JWTAuthenticationFilter(userDetailsService), UsernamePasswordAuthenticationFilter.class);
     }
@@ -62,6 +70,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        // Устанавлием собственный user details service
         auth.userDetailsService(userDetailsService);
     }
 

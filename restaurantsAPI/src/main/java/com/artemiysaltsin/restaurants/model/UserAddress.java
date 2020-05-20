@@ -13,6 +13,11 @@ import javax.persistence.*;
 @Entity
 @Table(name = "user_address")
 public class UserAddress {
+    /**
+     *
+     * Класс адреса пользователя
+     *
+     */
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

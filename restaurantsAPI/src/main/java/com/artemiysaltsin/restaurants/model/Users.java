@@ -12,6 +12,11 @@ import javax.validation.constraints.Email;
 @Entity
 @Table(name = "user")
 public class Users {
+    /**
+     *
+     * Класс пользователя
+     *
+     */
 
     @Email(message = "Email should be valid",
             regexp = "^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$")

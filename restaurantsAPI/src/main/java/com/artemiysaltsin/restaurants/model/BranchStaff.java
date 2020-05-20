@@ -14,6 +14,11 @@ import java.sql.Date;
 @Entity
 @Table(name = "staff")
 public class BranchStaff {
+    /**
+     *
+     * Класс сотрудника принадлежащего филиалу ресторана
+     *
+     */
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

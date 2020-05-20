@@ -25,6 +25,11 @@ import java.util.List;
 
 @RestController
 public class OrdersController {
+    /**
+     *
+     * Контроллер, отвечающий за обработку запросов связанных с заказами
+     *
+     */
 
     @Autowired
     BranchStaffRepository branchStaffRepository;
@@ -43,14 +48,20 @@ public class OrdersController {
 
     @RequestMapping(value = "/orders", method = RequestMethod.GET)
     public ResponseEntity getOrders() {
+        //
+        // Возвращает все товары со статусом 1 (оформляется)
+        //
         List<CustomerOrder> orders = orderRepository.findAllByStatus(1);
-
         return ResponseEntity.ok(orders);
 
     }
 
     @RequestMapping(value = "/orders", method = RequestMethod.POST)
     public ResponseEntity createOrder(Authentication authentication) {
+        //
+        // Создаёт корзину посетителя
+        // Если она уже создана, возвращает IM_USED
+        //
         CustomerOrder order = orderRepository.findByUserEmailAndStatus(authentication.getName(), 1);
         if (order == null) {
             BranchSeat branchSeat = branchSeatRepository.findByUserEmail(authentication.getName());
@@ -65,6 +76,11 @@ public class OrdersController {
     @RequestMapping(value = "/cart", method = RequestMethod.PUT)
     public ResponseEntity putCartItem(Authentication authentication,
                                        @RequestBody CartItemForm cartItem) {
+        //
+        // Добавляет выбранный товар в корзину
+        // Если корзина отсутствует, возвращает NOT_FOUND
+        // Если нет товара с переданным id, возвращает BAD_REQUEST
+        //
 
         CustomerOrder customerOrder = orderRepository.findByUserEmailAndStatus(authentication.getName(), 1);
         if (customerOrder == null) return ResponseEntity.ok(HttpStatus.NOT_FOUND);
@@ -87,6 +103,11 @@ public class OrdersController {
     @RequestMapping(value = "/cart", method = RequestMethod.POST)
     public ResponseEntity postCartItem(Authentication authentication) {
 
+        //
+        // Оформление заказа
+        // Все товары в корзине пользователя переходят в статус 2 (готовится)
+        // чтобы они могли отобразиться на кухне
+        //
         CustomerOrder customerOrder = orderRepository.findByUserEmailAndStatus(authentication.getName(), 1);
         if (customerOrder == null) return ResponseEntity.ok(HttpStatus.NOT_FOUND);
 

@@ -12,6 +12,11 @@ import javax.persistence.*;
 @Entity
 @Table(name = "menu")
 public class BranchMenu {
+    /**
+     *
+     * Класс товара из меню ресторана
+     *
+     */
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

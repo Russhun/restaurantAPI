@@ -13,6 +13,11 @@ import javax.persistence.*;
 @Entity
 @Table(name = "restaurant")
 public class Restaurant {
+    /**
+     *
+     * Класс ресторана
+     *
+     */
 
     @Id
     private int id;

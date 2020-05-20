@@ -26,6 +26,11 @@ public class JWTAuthenticationFilter extends GenericFilterBean {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
             throws IOException, ServletException {
+        //
+        // Устанавливает аутентификацию в контекст текущего запроса,
+        // чтобы SecurityContextHolder мог решить, отклонить запрос ии нет
+        // Если authentication == null, то запрос отклоняется
+        //
 
         Authentication authentication = TokenAuthenticationService
                 .getAuthentication((HttpServletRequest) servletRequest, userDetailsService);

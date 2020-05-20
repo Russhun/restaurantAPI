@@ -21,6 +21,11 @@ public class TokenAuthenticationService {
     static final String HEADER_STRING = "Authorization";
 
     public static void addAuthentication(HttpServletResponse res, String username) {
+        //
+        // Формирует JWT токен для пользователя
+        // И прикрепляет его к заголовку ответа Authorization,
+        // чтобы пользователь мог его запомнить и использовать для доступа к ресурсу
+        //
         String JWT = Jwts.builder().setSubject(username)
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATIONTIME))
                 .signWith(SignatureAlgorithm.HS512, SECRET).compact();
@@ -28,6 +33,12 @@ public class TokenAuthenticationService {
     }
 
     public static Authentication getAuthentication(HttpServletRequest request, MySQLUserDetailsService userDetailsService) {
+        //
+        // Проверяет валидность токена
+        // Если токен не валиден возвращает null, что соответствует отклонению запроса
+        // Если валиден передаёт инфомацию о текушем пользователе (его почту)
+        // для дальнейшей обработки в контроллере
+        //
         String token = request.getHeader(HEADER_STRING);
         String user;
         if (token != null) {

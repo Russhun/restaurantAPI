@@ -16,6 +16,11 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "branch_seat")
 public class BranchSeat {
+    /**
+     *
+     * Класс места в филиале ресторана
+     *
+     */
 
     @Id
     private int id;

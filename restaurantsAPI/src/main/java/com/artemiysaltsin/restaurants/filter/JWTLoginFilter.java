@@ -28,7 +28,11 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
     public Authentication attemptAuthentication(HttpServletRequest httpServletRequest,
                                                 HttpServletResponse httpServletResponse)
             throws AuthenticationException {
-
+        //
+        // Обаботка запроса на вход
+        // Получаем имя пользователя (почту) и пароль из заголовков запроса
+        // и передаём на обработку аутентификатору
+        //
         String username = httpServletRequest.getHeader("app-username");
         String password = httpServletRequest.getHeader("app-password");
 
@@ -43,9 +47,9 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
                                             Authentication authResult) {
 
 
+        // В случае успешного прохождения аутентификации передаём ответ и имя пользователя в токен сервис
+        // который производит создания токена доступа для пользователя
         TokenAuthenticationService.addAuthentication(response, authResult.getName());
-        String authStr = response.getHeader("Authorization");
-        System.out.println(authStr);
 
     }
 }

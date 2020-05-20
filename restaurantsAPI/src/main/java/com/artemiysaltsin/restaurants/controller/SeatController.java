@@ -16,6 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class SeatController {
+    /**
+     *
+     * Обработка запросов связанных с местами
+     *
+     */
 
     @Autowired
     BranchSeatRepository branchSeatRepository;
@@ -24,6 +29,8 @@ public class SeatController {
     public ResponseEntity postSeat(Authentication authentication,
                                    @RequestBody PlaceForm placeForm) {
 
+        // Если пользователь пытается усадить на место другого человека, запрос отклоняется
+        // Иначе место фиксируется за посетителем
         if (!authentication.getName().equals(placeForm.getUserEmail())) return ResponseEntity.ok(HttpStatus.FORBIDDEN);
 
         BranchSeat branchSeat = branchSeatRepository.findByBranchIdAndTableNumberAndSeatNumber(placeForm.getBranchId(),
@@ -37,6 +44,9 @@ public class SeatController {
 
     @RequestMapping(value = "/seat", method = RequestMethod.GET)
     public ResponseEntity getSeat(@RequestBody BranchIdForm branchIdForm) {
+        //
+        // Возвращает все свободные столы по id филиала
+        //
         return ResponseEntity.ok(branchSeatRepository.findAllByBranchIdAndUserEmailAndEnable(branchIdForm.getBranchId(),
                 null,
                 true));
@@ -46,7 +56,10 @@ public class SeatController {
     @RequestMapping(value = "/seat", method = RequestMethod.DELETE)
     public ResponseEntity deleteSeat(Authentication authentication,
                                      @RequestBody PlaceForm placeForm) {
-
+        //
+        // Открепляет место от пользователя. Если это пытается сделать кто-то другое,
+        // то запрос отклоняется
+        //
         if (!authentication.getName().equals(placeForm.getUserEmail())) return ResponseEntity.ok(HttpStatus.FORBIDDEN);
 
         BranchSeat branchSeat = branchSeatRepository.findByBranchIdAndTableNumberAndSeatNumber(placeForm.getBranchId(),

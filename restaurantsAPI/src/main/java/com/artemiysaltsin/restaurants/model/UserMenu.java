@@ -12,6 +12,11 @@ import javax.persistence.*;
 @Entity
 @Table(name = "order_product")
 public class UserMenu {
+    /**
+     *
+     * Класс товара из корзины пользователя
+     *
+     */
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -13,6 +13,11 @@ import javax.persistence.*;
 @Entity
 @Table(name = "branch")
 public class Branch {
+    /**
+     *
+     * Класс филиала ресторана
+     *
+     */
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -15,6 +15,7 @@ public class RestaurantController {
 
     @RequestMapping(value = "/restaurant", method = RequestMethod.GET)
     public ResponseEntity getRestaurant() {
+        // Возвращает ресторан по id
         return ResponseEntity.ok(restaurantRepository.findById(1));
     }
 

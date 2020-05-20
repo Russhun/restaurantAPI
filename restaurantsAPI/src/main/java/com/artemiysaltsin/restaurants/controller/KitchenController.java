@@ -19,6 +19,9 @@ import java.util.List;
 
 @RestController
 public class KitchenController {
+    /**
+     * Контроллер, отвечающий за обработку запросов связанных с кухней
+     */
 
     @Autowired
     UserMenuRepository userMenuRepository;
@@ -28,6 +31,10 @@ public class KitchenController {
 
     @RequestMapping(value = "/kitchen", method = RequestMethod.GET)
     public ResponseEntity getProducts() {
+        //
+        // Возвращает все заказы со статусом 2 (готовится)
+        // Если таких нет, то возвращает NOT_FOUND
+        //
         List<BranchMenu> userMenuItems = new ArrayList<BranchMenu>();
         List<UserMenu> userMenus = userMenuRepository.findAllByProductStatusId(2);
         if (userMenus != null)
@@ -45,7 +52,9 @@ public class KitchenController {
 
     @RequestMapping(value = "/kitchen", method = RequestMethod.POST)
     public ResponseEntity makeProduct(@RequestBody KitchenForm kitchenForm) {
-
+        //
+        // Возвращает OK, если статус заказа был обновлён на 3 (приготовлен)
+        //
         UserMenu userMenu = userMenuRepository.findById(kitchenForm.getUserMenuId());
         userMenu.setProductStatusId(3);
         userMenuRepository.save(userMenu);
